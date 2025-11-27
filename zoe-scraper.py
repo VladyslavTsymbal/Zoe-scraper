@@ -101,8 +101,6 @@ def main():
 
             if last_hash != current_hash:
                 print("Изменения обнаружены — отправляем обновление...")
-                print("Data: " + data)
-                return
                 send_telegram(data)
                 save_last_hash(current_hash)
                 last_hash = current_hash
