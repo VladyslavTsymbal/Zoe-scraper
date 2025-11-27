@@ -11,7 +11,7 @@ URL = "https://www.zoe.com.ua"
 CHECK_INTERVAL = 60 * 5  # проверка каждые 5 минут
 TOKEN = "YOUR_TOKEN"
 CHAT_ID = "YOUR_CHAT_ID"
-STATE_FILE = Path("YOUR_PATH")  # путь к файлу состояния
+STATE_FILE = Path("YOUR_FILE_PATH")  # путь к файлу состояния
 
 # === Регулярка для строк вида "5.2: не вимикається" или "1.1: 19:00 - 20:30"
 pattern = re.compile(r"(\d+\.\d+:\s*[^\n\r]+)")
@@ -92,9 +92,12 @@ def main():
     print(f"Последний сохранённый хэш: {last_hash}")
 
     while True:
+        time.sleep(CHECK_INTERVAL)
+
         try:
             data = fetch_data()
             if not data:
+                print("Данные не найдены, скип.")
                 continue
 
             current_hash = get_hash(data)
@@ -109,8 +112,6 @@ def main():
 
         except Exception as e:
             print(f"Ошибка: {e}")
-
-        time.sleep(CHECK_INTERVAL)
 
 if __name__ == "__main__":
     main()
